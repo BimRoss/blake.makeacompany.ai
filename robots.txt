@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://blake.makeacompany.ai/sitemap.xml

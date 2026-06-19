@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-29N1GMQ3NE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-29N1GMQ3NE');
+
+      try {
+        var gaHealthKey = 'ga_health_ping_sent';
+        if (!sessionStorage.getItem(gaHealthKey)) {
+          var gaDebug = window.location.search.indexOf('ga_debug=1') !== -1;
+          gtag('event', 'ga_health_ping', {
+            event_category: 'observability',
+            event_label: 'frontend_boot',
+            non_interaction: true,
+            debug_mode: gaDebug
+          });
+          sessionStorage.setItem(gaHealthKey, '1');
+        }
+      } catch (err) {}
+    </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blake Carnahan × makeacompany.ai</title>
+  <meta name="description" content="A personalized read on Blake Carnahan — Sr AE at Salesforce — and what compounds from here." />
+  <link rel="canonical" href="https://blake.makeacompany.ai/" />
+  <meta property="og:title" content="Blake Carnahan × makeacompany.ai" />
+  <meta property="og:description" content="A personalized read on Blake Carnahan — Sr AE at Salesforce — and what compounds from here." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://blake.makeacompany.ai/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #070a12;
+      --bg2: #0d1120;
+      --gold: #f5a623;
+      --gold-dim: #c4841a;
+      --purple: #7c3aed;
+      --purple-light: #a78bfa;
+      --green: #10b981;
+      --red: #ef4444;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border: rgba(245, 166, 35, 0.15);
+      --card: rgba(255,255,255,0.03);
+      --card-hover: rgba(255,255,255,0.06);
+      --glow: 0 0 40px rgba(245, 166, 35, 0.15);
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.6; }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    .grid-bg {
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(245,166,35,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245,166,35,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none; z-index: 0;
+    }
+
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(7, 10, 18, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(245,166,35,0.08);
+    }
+    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+    .nav-logo span { color: var(--gold); }
+    .nav-cta { background: var(--gold); color: #000; border: none; padding: 8px 20px; border-radius: 6px; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 13px; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; letter-spacing: 0.02em; }
+    .nav-cta:hover { background: #fbb840; transform: translateY(-1px); }
+
+    .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 24px 80px; position: relative; overflow: hidden; }
+    .hero-glow { position: absolute; width: 800px; height: 800px; border-radius: 50%; background: radial-gradient(circle, rgba(245,166,35,0.08) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -55%); pointer-events: none; }
+    .hero-glow-2 { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(124,58,237,0.06) 0%, transparent 70%); top: 60%; right: 10%; pointer-events: none; }
+
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.25); border-radius: 100px; padding: 6px 16px; font-size: 12px; font-weight: 500; color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 32px; }
+    .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+
+    .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(48px, 8vw, 96px); font-weight: 700; line-height: 1; letter-spacing: -0.03em; margin-bottom: 24px; }
+    .hero h1 .line1 { display: block; color: var(--text); }
+    .hero h1 .line2 { display: block; background: linear-gradient(135deg, var(--gold) 0%, #fbb840 50%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .hero-sub { font-size: clamp(16px, 2vw, 20px); color: var(--text-muted); max-width: 620px; margin: 0 auto 48px; font-weight: 400; line-height: 1.7; }
+    .hero-sub strong { color: var(--text); font-weight: 600; }
+
+    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary { background: var(--gold); color: #000; padding: 14px 32px; border-radius: 8px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; text-decoration: none; transition: all 0.2s; letter-spacing: 0.01em; }
+    .btn-primary:hover { background: #fbb840; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(245,166,35,0.4); }
+    .btn-secondary { background: transparent; color: var(--text); padding: 14px 32px; border-radius: 8px; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; text-decoration: none; border: 1px solid rgba(255,255,255,0.12); transition: all 0.2s; }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    .scroll-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-muted); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scroll-pulse 2s ease-in-out infinite; }
+    @keyframes scroll-pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+    section { padding: 100px 0; position: relative; z-index: 1; }
+    .section-label { display: inline-flex; align-items: center; gap: 8px; color: var(--gold); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; }
+    .section-label::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+
+    h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 16px; }
+    .section-sub { color: var(--text-muted); font-size: 17px; max-width: 600px; line-height: 1.7; margin-bottom: 60px; }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 80px; }
+    .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 28px 24px; position: relative; overflow: hidden; transition: border-color 0.2s, background 0.2s; }
+    .stat-card:hover { border-color: rgba(245,166,35,0.35); background: var(--card-hover); }
+    .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0; transition: opacity 0.3s; }
+    .stat-card:hover::before { opacity: 1; }
+    .stat-label { font-size: 11px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+    .stat-value { font-family: 'Space Grotesk', sans-serif; font-size: 36px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+    .stat-detail { font-size: 13px; color: var(--text-muted); }
+    .stat-change { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--green); margin-top: 6px; }
+
+    .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 60px; }
+    @media (max-width: 768px) { .charts-grid { grid-template-columns: 1fr; } }
+    .chart-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; position: relative; overflow: hidden; }
+    .chart-card.wide { grid-column: 1 / -1; }
+    .chart-title { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .chart-subtitle { font-size: 12px; color: var(--text-muted); margin-bottom: 24px; }
+    .chart-container { position: relative; height: 220px; }
+    .chart-container.tall { height: 280px; }
+
+    .analysis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .analysis-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: border-color 0.2s, transform 0.2s; }
+    .analysis-card:hover { border-color: rgba(245,166,35,0.3); transform: translateY(-4px); }
+    .analysis-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px; }
+    .icon-gold { background: rgba(245,166,35,0.12); }
+    .icon-purple { background: rgba(124,58,237,0.12); }
+    .icon-green { background: rgba(16,185,129,0.12); }
+    .icon-blue { background: rgba(59,130,246,0.12); }
+    .analysis-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+    .analysis-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+    .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+    .tag { background: rgba(245,166,35,0.08); border: 1px solid rgba(245,166,35,0.2); color: var(--gold); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; }
+    .tag.purple { background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.2); color: var(--purple-light); }
+    .tag.green { background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.2); color: var(--green); }
+
+    .opportunity-section { background: linear-gradient(180deg, transparent 0%, rgba(124,58,237,0.04) 50%, transparent 100%); border-top: 1px solid rgba(124,58,237,0.1); border-bottom: 1px solid rgba(124,58,237,0.1); }
+    .opp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .opp-card { background: rgba(124,58,237,0.05); border: 1px solid rgba(124,58,237,0.15); border-radius: 12px; padding: 28px 24px; transition: all 0.2s; }
+    .opp-card:hover { background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.3); transform: translateY(-3px); }
+    .opp-number { font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; color: var(--purple-light); line-height: 1; margin-bottom: 8px; opacity: 0.6; }
+    .opp-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; margin-bottom: 8px; color: var(--purple-light); }
+    .opp-card p { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+    .challenges-section { background: linear-gradient(180deg, transparent 0%, rgba(239,68,68,0.03) 50%, transparent 100%); border-top: 1px solid rgba(239,68,68,0.08); border-bottom: 1px solid rgba(239,68,68,0.08); }
+    .chal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .chal-card { background: rgba(239,68,68,0.04); border: 1px solid rgba(239,68,68,0.12); border-radius: 12px; padding: 28px 24px; transition: all 0.2s; }
+    .chal-card:hover { background: rgba(239,68,68,0.07); border-color: rgba(239,68,68,0.25); transform: translateY(-3px); }
+    .chal-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 10px; color: #fca5a5; }
+    .chal-card p { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+    .radar-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    @media (max-width: 768px) { .radar-section { grid-template-columns: 1fr; } }
+    .radar-text h2 { margin-bottom: 20px; }
+    .radar-text p { color: var(--text-muted); font-size: 15px; line-height: 1.75; margin-bottom: 16px; }
+
+    .timeline { position: relative; padding-left: 32px; margin-top: 40px; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--gold), transparent); }
+    .timeline-item { position: relative; padding-bottom: 32px; }
+    .timeline-item::before { content: ''; position: absolute; left: -36px; top: 4px; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(245,166,35,0.15); }
+    .timeline-date { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+    .timeline-title { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .timeline-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+    .quote-block { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0; padding: 28px 32px; margin: 48px 0; position: relative; }
+    .quote-text { font-family: 'Space Grotesk', sans-serif; font-size: clamp(18px, 2.5vw, 24px); font-weight: 500; line-height: 1.5; color: var(--text); font-style: italic; margin-bottom: 16px; }
+    .quote-author { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+    .quote-author strong { color: var(--gold); }
+
+    .credentials-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 40px; }
+    .cred-badge { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 20px; font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; color: var(--text-muted); transition: all 0.2s; }
+    .cred-badge:hover { border-color: rgba(245,166,35,0.3); color: var(--text); }
+    .cred-badge.lead { background: rgba(245,166,35,0.08); border-color: rgba(245,166,35,0.25); color: var(--gold); }
+
+    .cta-section { text-align: center; padding: 120px 24px; overflow: hidden; }
+    .cta-glow { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(124,58,237,0.08) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+    .cta-section h2 { font-size: clamp(36px, 5vw, 64px); margin-bottom: 20px; }
+    .cta-section p { font-size: 18px; color: var(--text-muted); max-width: 520px; margin: 0 auto 48px; line-height: 1.7; }
+
+    footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 32px 24px; text-align: center; color: var(--text-muted); font-size: 13px; position: relative; z-index: 1; }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(245,166,35,0.15), transparent); margin: 0; }
+
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up:nth-child(2) { transition-delay: 0.1s; }
+    .fade-up:nth-child(3) { transition-delay: 0.2s; }
+    .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+    .progress-list { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+    .progress-label span:last-child { color: var(--text); font-weight: 600; }
+    .progress-track { height: 6px; background: rgba(255,255,255,0.06); border-radius: 100px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 100px; width: 0; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .fill-gold { background: linear-gradient(90deg, var(--gold-dim), var(--gold)); }
+    .fill-purple { background: linear-gradient(90deg, var(--purple), var(--purple-light)); }
+    .fill-green { background: linear-gradient(90deg, #059669, var(--green)); }
+
+    @media (max-width: 640px) {
+      section { padding: 60px 0; }
+      .container { padding: 0 16px; }
+      nav { padding: 12px 16px; }
+      .nav-logo { font-size: 11px; letter-spacing: 0.04em; }
+      .nav-cta { white-space: nowrap; padding: 8px 14px; font-size: 12px; }
+      .hero { padding: 88px 16px 56px; min-height: auto; justify-content: flex-start; }
+      .hero h1 { font-size: clamp(40px, 11vw, 64px); }
+      .hero-sub { font-size: 15px; margin-bottom: 36px; }
+      .hero-actions { flex-direction: column; width: 100%; gap: 10px; }
+      .btn-primary, .btn-secondary { width: 100%; text-align: center; padding: 16px 24px; font-size: 16px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .stat-card { padding: 20px 16px; }
+      .stat-value { font-size: 28px; }
+      .analysis-grid { grid-template-columns: 1fr; }
+      .opp-grid { grid-template-columns: 1fr; }
+      .chal-grid { grid-template-columns: 1fr; }
+      .timeline-layout { grid-template-columns: 1fr !important; gap: 40px !important; }
+      .timeline-layout > *:last-child { padding-top: 0 !important; }
+      .cta-section { padding: 80px 16px; }
+      .cta-section .hero-actions { flex-direction: column; width: 100%; }
+      .chart-card { padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">makeacompany<span>.ai</span> &times; Blake Carnahan</div>
+    <a href="#contact" class="nav-cta">Let's Talk</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow-2"></div>
+    <div class="container">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        Pre-Meeting Read &middot; June 2026
+      </div>
+      <h1>
+        <span class="line1">We see</span>
+        <span class="line2">Blake.</span>
+      </h1>
+      <p class="hero-sub">
+        Seven years calling pitches in pro ball. Six more selling at Novatech, Motive, and now Salesforce.
+        <strong>You don't get to Sr AE on the world's biggest CRM by accident</strong>, and you definitely don't get there in the year AI starts eating the CRM itself unless you're paying attention.
+      </p>
+      <div class="hero-actions">
+        <a href="#analysis" class="btn-primary">See the Read</a>
+        <a href="#contact" class="btn-secondary">Work With Us</a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- STATS -->
+  <section id="analysis">
+    <div class="container">
+      <div class="section-label">By the Numbers</div>
+      <h2>The career, on paper</h2>
+      <p class="section-sub">A quick read on what shows up when you line up the timeline.</p>
+
+      <div class="stats-grid">
+        <div class="stat-card fade-up">
+          <div class="stat-label">Years in Sales</div>
+          <div class="stat-value" data-count="6" data-prefix="" data-suffix="">0</div>
+          <div class="stat-detail">Novatech &rarr; Motive &rarr; Salesforce</div>
+          <div class="stat-change">&#9650; Three companies, zero gaps</div>
+        </div>
+        <div class="stat-card fade-up">
+          <div class="stat-label">Seasons in Blue</div>
+          <div class="stat-value" data-count="7" data-prefix="" data-suffix="">0</div>
+          <div class="stat-detail">Minor League umpire, 2012&ndash;2019</div>
+          <div class="stat-change">&#9650; Composure as a default state</div>
+        </div>
+        <div class="stat-card fade-up">
+          <div class="stat-label">Time to Sr AE</div>
+          <div class="stat-value" data-count="3" data-prefix="" data-suffix="y">0</div>
+          <div class="stat-detail">Salesforce AE &rarr; Sr AE, Aug '25</div>
+          <div class="stat-change">&#9650; On-quota track, not a tour stop</div>
+        </div>
+        <div class="stat-card fade-up">
+          <div class="stat-label">LinkedIn Reach</div>
+          <div class="stat-value" data-count="2038" data-prefix="" data-suffix="+">0</div>
+          <div class="stat-detail">Followers &middot; UGA + Nashville network</div>
+          <div class="stat-change">&#9650; Quiet builder, not a megaphone</div>
+        </div>
+      </div>
+
+      <!-- CHARTS -->
+      <div class="charts-grid">
+        <div class="chart-card fade-up">
+          <div class="chart-title">Tenure by Role</div>
+          <div class="chart-subtitle">Months in seat, last 6 years</div>
+          <div class="chart-container">
+            <canvas id="tenureChart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card fade-up">
+          <div class="chart-title">Time Allocation, Modern AE</div>
+          <div class="chart-subtitle">Where the hours actually go</div>
+          <div class="chart-container">
+            <canvas id="timeChart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card wide fade-up">
+          <div class="chart-title">The Agent Shift</div>
+          <div class="chart-subtitle">Indexed enterprise spend: CRM seats vs. AI agents on top of CRM (2023 to 2026)</div>
+          <div class="chart-container tall">
+            <canvas id="agentChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <p style="font-size: 11px; color: var(--text-muted); margin-top: 16px; opacity: 0.7;">* Tenure pulled from public LinkedIn. Time allocation and agent spend curves are illustrative, modeled on Salesforce State of Sales 2024/25, Lemkin/SaaStr public commentary, and analyst spend reports.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WHAT BLAKE GETS RIGHT -->
+  <section>
+    <div class="container">
+      <div class="section-label">The Read</div>
+      <h2>What Blake gets right</h2>
+      <p class="section-sub">Most AEs at Salesforce got there through one path. Blake has a stack of priors that read differently, and they show up in how he sells.</p>
+
+      <div class="analysis-grid">
+        <div class="analysis-card fade-up">
+          <div class="analysis-icon icon-gold">&#9918;</div>
+          <h3>The Umpire's Composure</h3>
+          <p>Seven Minor League seasons making split-second judgment calls in front of angry humans is the most underrated sales training imaginable. Discovery calls don't shake you when you've ejected a manager from home plate. The composure is the moat.</p>
+          <div class="tag-list">
+            <span class="tag">MiLB '12-'19</span>
+            <span class="tag">Pressure-tested</span>
+            <span class="tag">No-flinch discovery</span>
+          </div>
+        </div>
+
+        <div class="analysis-card fade-up">
+          <div class="analysis-icon icon-purple">&#128200;</div>
+          <h3>Vertical Range Before SaaS</h3>
+          <p>Novatech (managed services) to Motive (fleet/IoT) to Salesforce (everything). Three different buyer profiles in five years means he's already calibrated for the discovery work that trips up CRM-native AEs when the room turns toward ops or operations leaders.</p>
+          <div class="tag-list">
+            <span class="tag purple">SMB to mid-market</span>
+            <span class="tag purple">Ops-fluent</span>
+            <span class="tag purple">Multi-persona</span>
+          </div>
+        </div>
+
+        <div class="analysis-card fade-up">
+          <div class="analysis-icon icon-green">&#127758;</div>
+          <h3>Nashville Network</h3>
+          <p>Clarksville-to-Nashville is one of the fastest-growing corridors in the Southeast. The companies he meets at the country-club lunch table this year are series-A in '27. UGA alumni network on top. Geography is doing real work here.</p>
+          <div class="tag-list">
+            <span class="tag green">Nashville metro</span>
+            <span class="tag green">UGA alumni</span>
+            <span class="tag green">SE corridor</span>
+          </div>
+        </div>
+
+        <div class="analysis-card fade-up">
+          <div class="analysis-icon icon-blue">&#129504;</div>
+          <h3>Already Inside the AI Conversation</h3>
+          <p>His feed isn't generic CRM-AE chatter. He reposts Lemkin on agents eating CRM spend. That signals an AE who's already three quarters ahead of the customer conversation, which is the only place you want to be when the platform underneath you is mid-shift.</p>
+          <div class="tag-list">
+            <span class="tag">Agentforce-ready</span>
+            <span class="tag">SaaStr-literate</span>
+            <span class="tag">Forward-leaning</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="quote-block">
+        <div class="quote-text">"We spend 5x more on the AI agents that run on top of our CRM than on our CRM itself."</div>
+        <div class="quote-author"><strong>Jason M. Lemkin</strong> &middot; SaaStr, reposted from Blake's feed</div>
+      </div>
+
+      <div>
+        <div class="section-label" style="margin-top: 0;">The credentials, lined up</div>
+        <div class="credentials-row">
+          <div class="cred-badge lead">Salesforce &middot; Sr AE</div>
+          <div class="cred-badge">Motive &middot; Commercial AE</div>
+          <div class="cred-badge">Novatech &middot; AE</div>
+          <div class="cred-badge">MLB / MiLB Umpire</div>
+          <div class="cred-badge">University of Georgia</div>
+          <div class="cred-badge">Env. Econ. &amp; Mgmt.</div>
+          <div class="cred-badge">Nashville metro</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- POSITIONING / RADAR -->
+  <section>
+    <div class="container">
+      <div class="radar-section">
+        <div class="radar-text fade-up">
+          <div class="section-label">Where the Role Is Going</div>
+          <h2>The AE shape, 2026</h2>
+          <p>The Sr AE seat at Salesforce in 2026 is not the seat Blake interviewed for in 2022. Pipeline is partly generated by agents. Discovery summaries write themselves. Decks rebuild from a Slack thread. Account research is on tap.</p>
+          <p>The AEs who win this transition are the ones who let the boring work compound through automation and spend their hours on the parts a customer actually pays for: judgment, relationship, account theory.</p>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Where the modern Sr AE role is heavy vs. where it's about to get light. Scored 0 to 10 by importance, 2026 vs. 2022.</p>
+          <div class="progress-list">
+            <div class="progress-item">
+              <div class="progress-label"><span>Account &amp; Industry Theory</span><span>9/10</span></div>
+              <div class="progress-track"><div class="progress-fill fill-gold" data-width="90"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label"><span>Executive Relationship</span><span>9/10</span></div>
+              <div class="progress-track"><div class="progress-fill fill-gold" data-width="92"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label"><span>Multi-Threading &amp; Champion Building</span><span>8/10</span></div>
+              <div class="progress-track"><div class="progress-fill fill-gold" data-width="84"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label"><span>Live Demo &amp; Storytelling</span><span>7/10</span></div>
+              <div class="progress-track"><div class="progress-fill fill-purple" data-width="74"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label"><span>CRM Hygiene &amp; Data Entry</span><span>3/10</span></div>
+              <div class="progress-track"><div class="progress-fill fill-green" data-width="30"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label"><span>Pipeline Generation, Hand-Crafted</span><span>4/10</span></div>
+              <div class="progress-track"><div class="progress-fill fill-green" data-width="38"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="chart-card fade-up" style="padding: 28px;">
+          <div class="chart-title">The AE Skill Shift</div>
+          <div class="chart-subtitle">What the seat looks like in 2022 vs. 2026</div>
+          <div class="chart-container tall">
+            <canvas id="radarChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- OPPORTUNITY -->
+  <section class="opportunity-section">
+    <div class="container">
+      <div class="section-label">Where We Come In</div>
+      <h2>The growth levers not yet pulled</h2>
+      <p class="section-sub">Salesforce gives Blake the platform. Agentforce gives him the talking points. What's still missing is the personal operations layer, the stack that turns a great AE into a great AE who got 8 extra hours back this week.</p>
+
+      <div class="opp-grid">
+        <div class="opp-card fade-up">
+          <div class="opp-number">01</div>
+          <h3>Account Brief on Demand</h3>
+          <p>One Slack message gets you a tight, current brief on any target account: recent earnings, exec movements, public posture on AI, where they sit on Agentforce, who you should be calling. The kind of prep that used to take a half-day intern.</p>
+        </div>
+        <div class="opp-card fade-up">
+          <div class="opp-number">02</div>
+          <h3>Discovery to Salesforce, Automatically</h3>
+          <p>The call ends, the notes are already in the right opp, the next-step tasks are queued, the follow-up email draft is in your inbox. CRM hygiene stops being the thing you avoid on Friday.</p>
+        </div>
+        <div class="opp-card fade-up">
+          <div class="opp-number">03</div>
+          <h3>The Personalized Deck, On a Thread</h3>
+          <p>Like this page, but as a deck. You drop the customer name in a Slack thread and an hour later there's a hosted leave-behind tuned to their industry, their LinkedIn presence, and the line of business you're chasing.</p>
+        </div>
+        <div class="opp-card fade-up">
+          <div class="opp-number">04</div>
+          <h3>Pipeline Heartbeat</h3>
+          <p>A morning standup with yourself: where every open opp moved overnight, which champions touched LinkedIn, which accounts went quiet, which one to call first. Five minutes, in Slack, before the first coffee.</p>
+        </div>
+        <div class="opp-card fade-up">
+          <div class="opp-number">05</div>
+          <h3>Champion Intelligence</h3>
+          <p>The model knows when your champion changed jobs, posted about your product, got promoted, or went dark, and tells you before the algorithm tells anyone else. The kind of edge that closes Q4 deals in Q3.</p>
+        </div>
+        <div class="opp-card fade-up">
+          <div class="opp-number">06</div>
+          <h3>Renewal Risk, Early</h3>
+          <p>Slack, Salesforce, and email signal stitched into one renewal risk score per account. The accounts that are about to wobble surface six weeks before they would have hit the forecast.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CHALLENGES -->
+  <section class="challenges-section">
+    <div class="container">
+      <div class="section-label">The Honest Read</div>
+      <h2>The challenges nobody puts on the slide</h2>
+      <p class="section-sub">If you sit in the Sr AE seat at Salesforce in 2026, this list lives rent-free in your head. We're not pitching past it. We're pitching into it.</p>
+
+      <div class="chal-grid">
+        <div class="chal-card fade-up">
+          <h3>The Forecast Tax</h3>
+          <p>Hours every week spent making the pipeline look like the pipeline. The work doesn't move a deal. It just makes the deal legible to a system that should have read it itself.</p>
+        </div>
+        <div class="chal-card fade-up">
+          <h3>Generic AI Inside the CRM</h3>
+          <p>Einstein and Agentforce are real, but the wins are at the platform layer. The AE-specific intelligence (your accounts, your champions, your weekly rhythm) is still mostly DIY.</p>
+        </div>
+        <div class="chal-card fade-up">
+          <h3>Slack &lt;&gt; Salesforce Context Loss</h3>
+          <p>The customer thread happens in Slack. The opp happens in Salesforce. The bridge between them is a copy-paste habit that decays the moment the quarter gets busy.</p>
+        </div>
+        <div class="chal-card fade-up">
+          <h3>The Long Discovery Cycle</h3>
+          <p>Pre-call research takes longer than the call. Most of it ends up never used because the prospect went a different direction in the first five minutes.</p>
+        </div>
+        <div class="chal-card fade-up">
+          <h3>Champion Turnover</h3>
+          <p>Your best champion left for a smaller company three weeks ago and nobody told you. The platform that should have caught it is busy showing you a pie chart.</p>
+        </div>
+        <div class="chal-card fade-up">
+          <h3>The "AI on Top of CRM" Race</h3>
+          <p>Lemkin's line says it plainly: the spend is moving to agents. The AEs who learn to operate agent staff this year are the ones writing the Sr AE job description in 2028.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- TIMELINE -->
+  <section>
+    <div class="container">
+      <div class="timeline-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;">
+        <div class="fade-up">
+          <div class="section-label">The Arc</div>
+          <h2>How Blake actually got here</h2>
+          <p style="color: var(--text-muted); font-size: 15px; line-height: 1.75; margin-bottom: 8px;">From the dirt around home plate to a Sr AE seat at the largest CRM company in the world. Read the arc, then read what the next chapter looks like.</p>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-date">2012 to 2019</div>
+              <div class="timeline-title">Minor League Umpire</div>
+              <div class="timeline-desc">Seven seasons in MiLB blue. The single best on-ramp to discovery, objection-handling, and reading a room that any career path offers, and almost nobody on a sales floor has.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Jan 2020</div>
+              <div class="timeline-title">Novatech &middot; AE</div>
+              <div class="timeline-desc">First sales seat. Middle and Southern Tennessee territory. Managed services and IT solutions, the world of long discovery and operations buyers.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Aug 2021</div>
+              <div class="timeline-title">Motive &middot; Commercial AE</div>
+              <div class="timeline-desc">Fleet, IoT, hardware on the truck. SaaS plus an asset, sold to ops leaders. The transition that calibrated him for technical multi-stakeholder selling.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Sep 2022</div>
+              <div class="timeline-title">Salesforce &middot; AE</div>
+              <div class="timeline-desc">Joins Nashville Salesforce. Three years of compounding territory work.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Aug 2025</div>
+              <div class="timeline-title">Salesforce &middot; Senior AE</div>
+              <div class="timeline-desc">Promotion. The seat with bigger logos, bigger ACVs, and a customer base in the middle of an Agentforce conversation.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Today</div>
+              <div class="timeline-title">Meeting with makeacompany.ai</div>
+              <div class="timeline-desc">Coffee in Nashville. Two operators who build agent-led companies in Slack channels. One AE who's already inside the agent conversation. See where it goes.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fade-up" style="padding-top: 60px;">
+          <div class="chart-card" style="margin-bottom: 24px;">
+            <div class="chart-title">Hours Saved per Week</div>
+            <div class="chart-subtitle">Per AE, modeled: manual today vs. agent-assisted</div>
+            <div class="chart-container">
+              <canvas id="hoursChart"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-title">Where Those Hours Go Back</div>
+            <div class="chart-subtitle">Reallocation when the boring work compounds</div>
+            <div class="chart-container">
+              <canvas id="reallocChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CTA -->
+  <section class="cta-section" id="contact">
+    <div class="cta-glow"></div>
+    <div class="container">
+      <div class="section-label" style="justify-content: center;">makeacompany.ai</div>
+      <h2>
+        <span style="background: linear-gradient(135deg, var(--text), var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Ready when</span>
+        <br />
+        <span style="background: linear-gradient(135deg, var(--gold), #fbb840); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">you are, Blake.</span>
+      </h2>
+      <p>This page took an hour. Imagine what the same stack does for an account brief, a discovery recap, or a leave-behind built for a real prospect in your book.</p>
+      <div class="hero-actions" style="justify-content: center;">
+        <a href="https://calendar.app.google/ot4zpCJ6NBLXhwWj8" target="_blank" rel="noopener" class="btn-primary">Book the Next Coffee</a>
+        <a href="https://makeacompany.ai" class="btn-secondary">makeacompany.ai &#8599;</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Prepared by <a href="https://makeacompany.ai">makeacompany.ai</a> &middot; June 2026 &middot; Public sources only: LinkedIn, Salesforce public materials, SaaStr commentary.</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          e.target.querySelectorAll('.progress-fill').forEach(bar => {
+            bar.style.width = bar.dataset.width + '%';
+          });
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    const progressObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.progress-fill').forEach(bar => {
+            bar.style.width = bar.dataset.width + '%';
+          });
+        }
+      });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('section').forEach(s => progressObserver.observe(s));
+
+    function animateCounter(el) {
+      const target = +el.dataset.count;
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const duration = 1600;
+      const start = performance.now();
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = Math.round(eased * target);
+        el.textContent = prefix + value.toLocaleString() + suffix;
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('[data-count]').forEach(animateCounter);
+          counterObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.stats-grid').forEach(el => counterObserver.observe(el));
+
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+
+    const gold = '#f5a623';
+    const purple = '#7c3aed';
+    const purpleLight = '#a78bfa';
+    const green = '#10b981';
+
+    new Chart(document.getElementById('tenureChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Novatech', 'Motive', 'Salesforce AE', 'Salesforce Sr AE'],
+        datasets: [{
+          label: 'Months',
+          data: [19, 13, 35, 10],
+          backgroundColor: [
+            'rgba(124,58,237,0.4)',
+            'rgba(124,58,237,0.55)',
+            'rgba(245,166,35,0.55)',
+            'rgba(245,166,35,0.85)',
+          ],
+          borderColor: [purple, purple, gold, gold],
+          borderWidth: 1.5,
+          borderRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ' ' + ctx.raw + ' months in seat' } }
+        },
+        scales: {
+          y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { callback: v => v + ' mo' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('timeChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Internal meetings', 'CRM admin', 'Customer calls', 'Account research', 'Email & follow-up', 'Deal review'],
+        datasets: [{
+          data: [22, 18, 24, 12, 14, 10],
+          backgroundColor: [
+            'rgba(124,58,237,0.7)',
+            'rgba(239,68,68,0.55)',
+            'rgba(16,185,129,0.7)',
+            'rgba(245,166,35,0.7)',
+            'rgba(59,130,246,0.6)',
+            'rgba(167,139,250,0.5)',
+          ],
+          borderColor: 'rgba(0,0,0,0.3)',
+          borderWidth: 2,
+          hoverOffset: 6,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, cutout: '60%',
+        plugins: {
+          legend: { position: 'right', labels: { boxWidth: 10, padding: 10, font: { size: 11 } } },
+          tooltip: { callbacks: { label: ctx => ' ' + ctx.label + ': ' + ctx.raw + '%' } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('agentChart'), {
+      type: 'line',
+      data: {
+        labels: ['2023 Q1','Q2','Q3','Q4','2024 Q1','Q2','Q3','Q4','2025 Q1','Q2','Q3','Q4','2026 Q1'],
+        datasets: [
+          {
+            label: 'AI agents on top of CRM',
+            data: [12, 18, 28, 42, 62, 90, 130, 180, 235, 300, 380, 470, 570],
+            borderColor: gold,
+            backgroundColor: 'rgba(245,166,35,0.06)',
+            borderWidth: 2.5,
+            pointBackgroundColor: gold,
+            pointRadius: 3,
+            pointHoverRadius: 6,
+            fill: true,
+            tension: 0.4,
+          },
+          {
+            label: 'Core CRM seats',
+            data: [100, 102, 104, 106, 108, 110, 112, 114, 116, 117, 118, 119, 120],
+            borderColor: 'rgba(148,163,184,0.6)',
+            backgroundColor: 'transparent',
+            borderWidth: 1.5,
+            borderDash: [4, 4],
+            pointRadius: 0,
+            tension: 0.4,
+          }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { labels: { boxWidth: 10, padding: 16, font: { size: 12 } } },
+          tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + ctx.raw + ' (indexed)' } }
+        },
+        scales: {
+          y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { callback: v => v + 'x' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('radarChart'), {
+      type: 'radar',
+      data: {
+        labels: ['Account Theory', 'Exec Relationship', 'Multi-thread', 'Live Demo', 'CRM Admin', 'Hand Prospecting'],
+        datasets: [
+          {
+            label: 'Sr AE 2026',
+            data: [9, 9, 8, 7, 3, 4],
+            borderColor: gold,
+            backgroundColor: 'rgba(245,166,35,0.12)',
+            borderWidth: 2,
+            pointBackgroundColor: gold,
+            pointRadius: 4,
+          },
+          {
+            label: 'Sr AE 2022',
+            data: [7, 7, 6, 8, 8, 8],
+            borderColor: 'rgba(148,163,184,0.6)',
+            backgroundColor: 'rgba(148,163,184,0.05)',
+            borderWidth: 1.5,
+            pointBackgroundColor: 'rgba(148,163,184,0.6)',
+            pointRadius: 3,
+          }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { labels: { boxWidth: 10, padding: 12, font: { size: 11 } } } },
+        scales: {
+          r: {
+            grid: { color: 'rgba(255,255,255,0.06)' },
+            angleLines: { color: 'rgba(255,255,255,0.06)' },
+            pointLabels: { color: '#94a3b8', font: { size: 11 } },
+            ticks: { display: false },
+            min: 0, max: 10,
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('hoursChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Account research', 'CRM hygiene', 'Recap & follow-up', 'Pipeline review'],
+        datasets: [
+          {
+            label: 'Manual (hrs/wk)',
+            data: [5, 4, 3, 2],
+            backgroundColor: 'rgba(239,68,68,0.5)',
+            borderColor: 'rgba(239,68,68,0.9)',
+            borderWidth: 1.5,
+            borderRadius: 4,
+          },
+          {
+            label: 'Agent-assisted',
+            data: [1, 0.5, 0.75, 0.5],
+            backgroundColor: 'rgba(245,166,35,0.7)',
+            borderColor: gold,
+            borderWidth: 1.5,
+            borderRadius: 4,
+          }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { boxWidth: 10, padding: 12, font: { size: 11 } } },
+          tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + ctx.raw + ' hrs/wk' } }
+        },
+        scales: {
+          y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { callback: v => v + 'h' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('reallocChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Account theory', 'Exec outreach', 'Live customer time', 'Strategic deal prep'],
+        datasets: [{
+          data: [3, 2.5, 2, 1.5],
+          backgroundColor: [
+            'rgba(245,166,35,0.7)',
+            'rgba(124,58,237,0.6)',
+            'rgba(16,185,129,0.6)',
+            'rgba(59,130,246,0.6)',
+          ],
+          borderRadius: 4,
+          borderWidth: 0,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ' +' + ctx.raw + ' hrs/wk back into this' } }
+        },
+        scales: {
+          x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { callback: v => '+' + v + 'h' }, max: 4 },
+          y: { grid: { display: false } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
